@@ -1,0 +1,20 @@
+package test;
+import java.sql.*;
+
+public class RegisterDAO {
+	public int k=0;
+	public int register(UserBean ub) {
+		try {
+			Connection con = DBConnection.getCon();
+			
+			String query;
+			
+			PrepareStatement ps = con.prepareStatement(query);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return k;
+	}
+}

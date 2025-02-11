@@ -1,0 +1,131 @@
+import java.sql.*;
+import java.util.Scanner;
+
+public class EmployeeJDBC {
+    private static final String DB_URL = "jdbc:oracle:thin:@localhost:1521:XE"; // Modify according to your DB setup
+    private static final String USER = "your_username"; // Replace with your DB username
+    private static final String PASS = "your_password"; // Replace with your DB password
+
+    public static void main(String[] args) {
+        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS)) {
+            createTable(conn);
+            Scanner scanner = new Scanner(System.in);
+            int choice;
+            do {
+                System.out.println("\nMenu:\n1.Insert\n2.Retrieve All\n3.Retrieve by Name\n4.Retrieve by Salary\n5.Update Salary\n6.Delete Max Salary\n7.Delete Name Ends with 'a'\n8.Exit");
+                choice = scanner.nextInt();
+                scanner.nextLine(); // Clear input buffer
+
+                switch (choice) {
+                    case 1: insertEmployee(conn, scanner); break;
+                    case 2: retrieveAllEmployees(conn); break;
+                    case 3: retrieveEmployeesStartingWithS(conn); break;
+                    case 4: retrieveEmployeesSalaryBetween(conn); break;
+                    case 5: updateEmployeeSalary(conn, scanner); break;
+                    case 6: deleteEmployeeWithMaxSalary(conn); break;
+                    case 7: deleteEmployeesNameEndsWithA(conn); break;
+                }
+            } while (choice != 8);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void createTable(Connection conn) throws SQLException {
+        String createTableSQL = "CREATE TABLE Employee_Info(empId NUMBER(5) PRIMARY KEY, empName VARCHAR2(15), empSalary NUMBER(10,2), empAddress VARCHAR2(20), empMailId VARCHAR2(20), empPhno NUMBER(15))";
+        try (Statement stmt = conn.createStatement()) {
+            stmt.executeUpdate(createTableSQL);
+        } catch (SQLException e) {
+            if (!e.getMessage().contains("already exists")) throw e;
+        }
+    }
+
+    private static void insertEmployee(Connection conn, Scanner scanner) throws SQLException {
+        System.out.print("Enter Employee ID: ");
+        int empId = scanner.nextInt();
+        scanner.nextLine(); // Clear input buffer
+        System.out.print("Enter Employee Name: ");
+        String empName = scanner.nextLine();
+        System.out.print("Enter Employee Salary: ");
+        double empSalary = scanner.nextDouble();
+        scanner.nextLine(); // Clear input buffer
+        System.out.print("Enter Employee Address: ");
+        String empAddress = scanner.nextLine();
+        System.out.print("Enter Employee Email ID: ");
+        String empMailId = scanner.nextLine();
+        System.out.print("Enter Employee Phone No: ");
+        long empPhNo = scanner.nextLong();
+
+        String insertSQL = "INSERT INTO Employee_Info VALUES (?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement pstmt = conn.prepareStatement(insertSQL)) {
+            pstmt.setInt(1, empId);
+            pstmt.setString(2, empName);
+            pstmt.setDouble(3, empSalary);
+            pstmt.setString(4, empAddress);
+            pstmt.setString(5, empMailId);
+            pstmt.setLong(6, empPhNo);
+            pstmt.executeUpdate();
+            System.out.println("Employee data inserted.");
+        }
+    }
+
+    private static void retrieveAllEmployees(Connection conn) throws SQLException {
+        String selectSQL = "SELECT * FROM Employee_Info";
+        try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(selectSQL)) {
+            while (rs.next()) {
+                System.out.printf("ID: %d, Name: %s, Salary: %.2f, Address: %s, Email: %s, Phone: %d%n",
+                                  rs.getInt("empId"), rs.getString("empName"), rs.getDouble("empSalary"), rs.getString("empAddress"),
+                                  rs.getString("empMailId"), rs.getLong("empPhno"));
+            }
+        }
+    }
+
+    private static void retrieveEmployeesStartingWithS(Connection conn) throws SQLException {
+        String selectSQL = "SELECT * FROM Employee_Info WHERE empName LIKE 'S%'";
+        try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(selectSQL)) {
+            while (rs.next()) {
+                System.out.printf("ID: %d, Name: %s%n", rs.getInt("empId"), rs.getString("empName"));
+            }
+        }
+    }
+
+    private static void retrieveEmployeesSalaryBetween(Connection conn) throws SQLException {
+        String selectSQL = "SELECT * FROM Employee_Info WHERE empSalary BETWEEN 10000 AND 20000";
+        try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(selectSQL)) {
+            while (rs.next()) {
+                System.out.printf("ID: %d, Name: %s, Salary: %.2f%n", rs.getInt("empId"), rs.getString("empName"), rs.getDouble("empSalary"));
+            }
+        }
+    }
+
+    private static void updateEmployeeSalary(Connection conn, Scanner scanner) throws SQLException {
+        System.out.print("Enter Employee ID to update salary: ");
+        int empId = scanner.nextInt();
+        System.out.print("Enter new salary: ");
+        double newSalary = scanner.nextDouble();
+
+        String updateSQL = "UPDATE Employee_Info SET empSalary = ? WHERE empId = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(updateSQL)) {
+            pstmt.setDouble(1, newSalary);
+            pstmt.setInt(2, empId);
+            pstmt.executeUpdate();
+            System.out.println("Salary updated.");
+        }
+    }
+
+    private static void deleteEmployeeWithMaxSalary(Connection conn) throws SQLException {
+        String deleteSQL = "DELETE FROM Employee_Info WHERE empId = (SELECT empId FROM Employee_Info WHERE empSalary = (SELECT MAX(empSalary) FROM Employee_Info))";
+        try (Statement stmt = conn.createStatement()) {
+            stmt.executeUpdate(deleteSQL);
+            System.out.println("Deleted employee with maximum salary.");
+        }
+    }
+
+    private static void deleteEmployeesNameEndsWithA(Connection conn) throws SQLException {
+        String deleteSQL = "DELETE FROM Employee_Info WHERE empName LIKE '%a'";
+        try (PreparedStatement pstmt = conn.prepareStatement(deleteSQL)) {
+            int rowsDeleted = pstmt.executeUpdate();
+            System.out.println("Deleted " + rowsDeleted + " employee(s) whose name ends with 'a'.");
+        }
+    }
+}

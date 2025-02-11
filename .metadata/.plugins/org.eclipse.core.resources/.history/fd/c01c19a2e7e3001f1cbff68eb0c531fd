@@ -1,0 +1,43 @@
+package test;
+
+import jakarta.servlet.*;
+
+public class DisplayServlet implements Servlet{
+	
+	ServletConfig scf;
+	
+	@Override
+	public void init(ServletConfig scf) {
+		this.scf=scf;
+	}
+	
+	@Override
+	public void service(ServletRequest req, ServletResponse res) {
+		
+		String uName = req.getParameter("uName");
+		String pwd	= req.getParameter("pwd");
+		String fName = req.getParameter("fName");
+		String lName =req.getParameter("lName");
+		String city = req.getParameter("city");
+		String mId =req.getParameter("mId");
+		String pNo =req.getParameter("phoneNo");
+		
+		ServletContext sct = req.getServletContext();
+		
+		
+	}
+	
+	@Override
+	public void destroy() {
+		
+	}
+	
+	@Override
+	public String getServletInfo() {
+		return "Display Servlet";
+	}
+	
+	public ServletConfig getServletConfig() {
+		return this.getServletConfig();
+	}
+}

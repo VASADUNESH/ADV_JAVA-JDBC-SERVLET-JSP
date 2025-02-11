@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<form action="choice" method="post">
+	
+	Value 1: <input type="number" name="v1" /> <br/>
+	Value 2: <input type="number" name="v2" /> <br/>
+	<input name="s1" value="add" type="submit">
+	<input  name="s1" value="avg" type="submit">
+	
+	</form>
+</body>
+</html>

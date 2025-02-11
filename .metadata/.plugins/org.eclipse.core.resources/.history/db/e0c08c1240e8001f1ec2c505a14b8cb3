@@ -1,0 +1,26 @@
+package test;
+
+import java.io.IOException;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.*;
+import jakarta.servlet.http.*;
+
+@WebServlet("/edit")
+public class EditProfileServlet extends HttpServlet{
+	
+	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		Cookie c[] = req.getCookies();
+		if(c==null) {
+			req.setAttribute("msg","Session Expired...<br>");
+			req.getRequestDispatcher("Msg.jsp").forward(req, res);
+		}
+		else {
+			String fn = c[0].getValue();
+			req.setAttribute("fN", fn);
+			req.getRequestDispatcher("EditProfile.jsp").forward(req, res);;
+		}
+	}
+	
+	
+}

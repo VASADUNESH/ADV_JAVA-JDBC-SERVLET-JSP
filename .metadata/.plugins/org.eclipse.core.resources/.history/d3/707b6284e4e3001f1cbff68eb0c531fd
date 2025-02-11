@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>Registation Form </h1>
+	UserName	<input type="text" name="uName" />
+	password 	<input type="password" name="pwd">
+	FirstName	<input type="text" name="fName" />
+	LastName	<input type="text" name="lName" />
+	City		<input type="text" name="city" />
+	MailId		<input type="email" name="mId" />
+	PhoneNo		<input type="number" name="phoneNo" />
+	<button>Submit</button>
+	
+</body>
+</html>

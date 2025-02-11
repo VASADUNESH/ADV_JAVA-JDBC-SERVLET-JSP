@@ -1,0 +1,63 @@
+package test;
+
+import java.sql.*;
+import java.util.Scanner;
+
+public class DBCon10 {
+    public static void main(String[] args) {
+        try (Scanner s = new Scanner(System.in);
+             Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "system", "tiger");
+             CallableStatement cs = con.prepareCall("{call RetrieveCustomer69(?,?,?,?,?,?,?,?,?,?,?)}")) {
+
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+
+            System.out.print("Enter the Cust-AccNO to retrieve details: ");
+            cs.setLong(1, s.nextLong());
+
+            // Registering output parameters
+            for (int i = 2; i <= 11; i++) {
+                cs.registerOutParameter(i, i == 3 ? Types.FLOAT : (i == 9 ? Types.INTEGER : (i == 11 ? Types.BIGINT : Types.VARCHAR)));
+            }
+
+            cs.execute();
+            System.out.println("-------Customer Details------");
+            System.out.printf("AccNO: %d%nCust-Name: %s%nCust-Bal: %.2f%nCust-AccType: %s%nCust-HNO: %s%nCust-SName: %s%nCust-City: %s%nCust-State: %s%nCust-PinCode: %d%nCust-MID: %s%nCust-PhoneNo: %d%n",
+                    cs.getLong(1), cs.getString(2), cs.getFloat(3), cs.getString(4), cs.getString(5), cs.getString(6), cs.getString(7), cs.getString(8), cs.getInt(9), cs.getString(10), cs.getLong(11));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+
+package test;
+
+import java.sql.*;
+import java.util.Scanner;
+
+public class DBCon10 {
+    public static void main(String[] args) {
+        try (Scanner s = new Scanner(System.in);
+             Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "system", "tiger");
+             CallableStatement cs = con.prepareCall("{call RetrieveCustomer69(?,?,?,?,?,?,?,?,?,?,?)}")) {
+
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+
+            System.out.print("Enter the Cust-AccNO to retrieve details: ");
+            cs.setLong(1, s.nextLong());
+
+            // Registering output parameters with a loop
+            for (int i = 2; i <= 11; i++) {
+                cs.registerOutParameter(i, (i == 3 || i == 9 || i == 11) ? Types.INTEGER : Types.VARCHAR);
+            }
+
+            cs.execute();
+            System.out.printf("------- Customer Details ------%nAccNO: %d%nCust-Name: %s%nCust-Bal: %.2f%nCust-AccType: %d%nCust-HNO: %s%nCust-SName: %s%nCust-City: %s%nCust-State: %s%nCust-PinCode: %d%nCust-MID: %s%nCust-PhoneNo: %d%n",
+                    cs.getLong(1), cs.getString(2), cs.getFloat(3), cs.getInt(4), cs.getString(5), cs.getString(6), 
+                    cs.getString(7), cs.getString(8), cs.getInt(9), cs.getString(10), cs.getInt(11));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}

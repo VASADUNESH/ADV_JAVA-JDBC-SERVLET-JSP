@@ -1,0 +1,33 @@
+package test;
+
+import jakarta.servlet.*;
+
+public class DisplayServlet implements Servlet{
+	
+	public ServletConfig scf;
+	@Override
+	public void init(ServletConfig scf ) throws ServletException{
+		this.scf=scf;
+	}
+	
+	@Override
+	public void service(ServletRequest req,ServletResponse res) {
+		
+	}
+	
+	public void destroy() {
+		
+	}
+	
+	@Override
+	public String getServletInfo() {
+		return "Display Servlet";
+	}
+	
+	public ServletConfig getServletConfig() {
+		return this.getServletConfig();
+	}
+	
+
+}
+

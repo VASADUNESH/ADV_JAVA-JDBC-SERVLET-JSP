@@ -1,0 +1,26 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"
+    import="test.UserBean"
+    %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<%
+	String fn = (String) request.getAttribute("fN");
+	UserBean ub = (UserBean) application.getAttribute("ub");
+	out.prinln("User: "+fn+"<br>");
+%>
+
+<form action="update" method="post">
+ 	<input type="text" name="city" value="<%=ub.getCity() %>" />
+ 	<input type="text" name="gmail" value="<%=ub.getmId() %>" />
+ 	<input type="number" name="no" value="<%=ub.getPhNo() %>" />
+ 	<button value="UpdateProfile" >Submit</button>
+</form>
+</body>
+</html>

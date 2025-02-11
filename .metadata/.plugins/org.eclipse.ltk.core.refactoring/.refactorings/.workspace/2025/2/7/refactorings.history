@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;PackJDBCProjects&apos; to &apos;PackOfJDBCProjects&apos;" description="Rename resource &apos;PackJDBCProjects&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="/PackJDBCProjects" name="PackOfJDBCProjects" stamp="1739267830585" updateReferences="true"/>
+</session>

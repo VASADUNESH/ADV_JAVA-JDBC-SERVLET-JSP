@@ -1,0 +1,9 @@
+package test;
+import jakarta.servlet.http.*;
+import jakarta.servlet.annotation.*;
+public class ViewProfileServlet extends HttpServlet{
+	@Override
+	public void getPost(HttpServletRequest req, HttpServletResponse res) {
+		
+	}
+}

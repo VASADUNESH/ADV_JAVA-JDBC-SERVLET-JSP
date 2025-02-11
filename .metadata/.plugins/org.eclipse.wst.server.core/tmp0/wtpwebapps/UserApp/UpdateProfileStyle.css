@@ -1,0 +1,76 @@
+/* General Page Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Container Box */
+.container {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 400px;
+}
+
+/* Welcome Heading */
+h2 {
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+/* Message Styling */
+.message {
+    font-size: 16px;
+    color: #444;
+    background: #f4f4f4;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+}
+
+/* Buttons */
+.buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn {
+    text-decoration: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: 0.3s ease;
+    border: none;
+    cursor: pointer;
+    width: 48%;
+    text-align: center;
+    
+}
+
+/* View Profile Button */
+.view {
+    background: #28a745;
+    color: white;
+}
+
+.view:hover {
+    background: #218838;
+}
+
+/* Logout Button */
+.logout {
+    background: #dc3545;
+    color: white;
+}
+
+.logout:hover {
+    background: #c82333;
+}

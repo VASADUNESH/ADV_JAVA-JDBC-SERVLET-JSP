@@ -1,0 +1,9 @@
+package test;
+
+import jakarta.servlet.annotation.*;
+import jakarta.servlet.http.*;
+@WebServlet("/login")
+
+public class LoginServlet extends HttpServlet{
+	
+}

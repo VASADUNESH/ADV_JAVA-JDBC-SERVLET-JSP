@@ -1,0 +1,9 @@
+package test;
+
+import jakarta.servlet.*;
+import jakarta.servlet.annotation.*;
+@WebServlet("/dis")
+
+public class DisplayServlet extends GenericServlet {
+
+}
